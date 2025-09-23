@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  mode: "debug" # debug, release, test
+  read_timeout: 30
+  write_timeout: 30
+  idle_timeout: 120
+
+logging:
+  level: "info" # debug, info, warn, error
+  format: "json" # json, text
+  output: "stdout" # stdout, file
+  file_path: "logs/api-gateway.log"
+
+cors:
+  allowed_origins:
+    - "http://localhost:3000"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "PATCH"
+  allowed_headers:
+    - "Content-Type"
+    - "Authorization"
+    - "X-Requested-With"
+  allow_credentials: true
+
+services:
+  auth:
+    base_url: "http://auth-service:8081"
+    timeout: 10
+  products:
+    base_url: "http://product-service:8082"
+    timeout: 10
+  orders:
+    base_url: "http://order-service:8083"
+    timeout: 15
+  inventory:
+    base_url: "http://inventory-service:8084"
+    timeout: 10
+  payments:
+    base_url: "http://payment-service:8085"
+    timeout: 30
+
+rate_limiting:
+  enabled: true
+  requests_per_minute: 100
+  burst: 20
+
+auth:
+  jwt_secret: "your-secret-key-change-in-production"
+  token_expiry: 24h
