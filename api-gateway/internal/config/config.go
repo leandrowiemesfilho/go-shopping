@@ -10,7 +10,7 @@ import (
 type Config struct {
 	Server       ServerConfig       `mapstructure:"server"`
 	Logging      LoggingConfig      `mapstructure:"logging"`
-	CORS         CORSConfig         `mapstructure:"cors"`
+	Cors         CorsConfig         `mapstructure:"cors"`
 	Services     ServicesConfig     `mapstructure:"services"`
 	RateLimiting RateLimitingConfig `mapstructure:"rate_limiting"`
 	Auth         AuthConfig         `mapstructure:"auth"`
@@ -31,7 +31,7 @@ type LoggingConfig struct {
 	FilePath string `mapstructure:"file_path"`
 }
 
-type CORSConfig struct {
+type CorsConfig struct {
 	AllowedOrigins   []string `mapstructure:"allowed_origins"`
 	AllowedMethods   []string `mapstructure:"allowed_methods"`
 	AllowedHeaders   []string `mapstructure:"allowed_headers"`
@@ -39,6 +39,14 @@ type CORSConfig struct {
 }
 
 type ServicesConfig struct {
+	Auth      ServiceConfig `mapstructure:"auth"`
+	Products  ServiceConfig `mapstructure:"products"`
+	Orders    ServiceConfig `mapstructure:"orders"`
+	Inventory ServiceConfig `mapstructure:"inventory"`
+	Payments  ServiceConfig `mapstructure:"payments"`
+}
+
+type ServiceConfig struct {
 	BaseURL string        `mapstructure:"base_url"`
 	Timeout time.Duration `mapstructure:"timeout"`
 }
@@ -59,7 +67,7 @@ var AppConfig *Config
 func LoadConfig() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	viper.AddConfigPath("./config")
 
 	setDefaults()
 
