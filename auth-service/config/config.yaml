@@ -1,0 +1,22 @@
+server:
+  port: "8081"
+  mode: "debug"
+  read_timeout: 30
+  write_timeout: 30
+
+database:
+  host: "localhost"
+  port: "5432"
+  user: "auth_user"
+  password: "auth_password"
+  dbname: "auth_service"
+  sslmode: "disable"
+
+jwt:
+  secret: "your-super-secret-jwt-key-change-in-production"
+  expiration_hours: 24
+  issuer: "auth-service"
+
+logger:
+  level: "info"
+  format: "json"
